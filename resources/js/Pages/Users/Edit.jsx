@@ -1,6 +1,6 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import TextAreaInput from "@/Components/TextAreaInput";
+import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -9,7 +9,10 @@ export default function Edit({ auth, user }) {
   const { data, setData, post, errors, reset, processing } = useForm({
     image: user.image || "",
     name: user.name || "",
-    description: user.description || "",
+    email: user.email || "",
+    password: "",
+    password_confirmation: "",
+    role: user.role || "",
     _method: "PUT",
   });
 
@@ -38,26 +41,14 @@ export default function Edit({ auth, user }) {
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900 dark:text-gray-100">
-              <form
+            <form
                 onSubmit={onSubmit}
                 className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
               >
-                {user.image_path && (
-                  <div className="mb-4">
-                    <img
-                      src={user.image_path}
-                      alt={user.name}
-                      className="w-64 object-cover rounded-lg"
-                    />
-                  </div>
-                )}
                 <div>
-                  <InputLabel
-                    htmlFor="workout_image_path"
-                    value="User Image"
-                  />
+                  <InputLabel htmlFor="profile_photo_path" value="User Image" />
                   <TextInput
-                    id="workout_image_path"
+                    id="profile_photo_path"
                     type="file"
                     name="image"
                     className="mt-1 block w-full"
@@ -66,9 +57,9 @@ export default function Edit({ auth, user }) {
                   <InputError message={errors.image} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                  <InputLabel htmlFor="workout_name" value="User Name" />
+                  <InputLabel htmlFor="user_name" value="Username" />
                   <TextInput
-                    id="workout_name"
+                    id="user_name"
                     type="text"
                     name="name"
                     value={data.name}
@@ -79,18 +70,63 @@ export default function Edit({ auth, user }) {
                   <InputError message={errors.name} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                  <InputLabel
-                    htmlFor="workout_description"
-                    value="User Description"
-                  />
-                  <TextAreaInput
-                    id="workout_description"
-                    name="description"
-                    value={data.description}
+                  <InputLabel htmlFor="user_email" value="Email" />
+                  <TextInput
+                    id="user_email"
+                    type="text"
+                    name="email"
+                    value={data.email}
                     className="mt-1 block w-full"
-                    onChange={(e) => setData("description", e.target.value)}
+                    onChange={(e) => setData("email", e.target.value)}
                   />
-                  <InputError message={errors.description} className="mt-2" />
+                  <InputError message={errors.email} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                  <InputLabel htmlFor="user_password" value="Password" />
+                  <TextInput
+                    id="user_password"
+                    type="password"
+                    name="password"
+                    value={data.password}
+                    className="mt-1 block w-full"
+                    onChange={(e) => setData("password", e.target.value)}
+                  />
+                  <InputError message={errors.password} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                  <InputLabel
+                    htmlFor="user_password_confirmation"
+                    value="Confirm Password"
+                  />
+                  <TextInput
+                    id="user_password_confirmation"
+                    type="password"
+                    name="password_confirmation"
+                    value={data.password_confirmation}
+                    className="mt-1 block w-full"
+                    onChange={(e) =>
+                      setData("password_confirmation", e.target.value)
+                    }
+                  />
+                  <InputError
+                    message={errors.password_confirmation}
+                    className="mt-2"
+                  />
+                </div>
+                <div className="mt-4">
+                  <InputLabel htmlFor="role" value="Select Role" />
+                  <SelectInput
+                    id="role"
+                    name="role"
+                    value={data.role}
+                    className="mt-1 block w-full"
+                    onChange={(e) => setData("role", e.target.value)}
+                  >
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </SelectInput>
+                  <InputError message={errors.role} className="mt-2" />
                 </div>
                 <div className="mt-4 text-right">
                   <button className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">

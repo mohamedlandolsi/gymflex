@@ -4,7 +4,12 @@ import TableHeading from "@/Components/TableHeading";
 import TextInput from "@/Components/TextInput";
 import { Link, router } from "@inertiajs/react";
 
-export default function ExercisesTable({ exercises, queryParams, users }) {
+export default function ExercisesTable({
+  exercises,
+  queryParams,
+  users,
+  success,
+}) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -37,8 +42,21 @@ export default function ExercisesTable({ exercises, queryParams, users }) {
     router.get(route("exercises.index"), queryParams);
   };
 
+  const deleteExercise = (exercise) => {
+    if (!window.confirm("Are you sure you want to delete this exercise?")) {
+      return;
+    }
+
+    router.delete(route("exercises.destroy", exercise.id));
+  };
+
   return (
     <>
+      {success && (
+        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4 text-center">
+          {success}
+        </div>
+      )}
       <div className="overflow-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
@@ -69,6 +87,14 @@ export default function ExercisesTable({ exercises, queryParams, users }) {
                 Description
               </TableHeading>
               <TableHeading
+                name="workout"
+                sort_field={queryParams.sort_field}
+                sort_direction={queryParams.sort_direction}
+                sortChanged={sortChanged}
+              >
+                Workout
+              </TableHeading>
+              <TableHeading
                 name="created_by"
                 sort_field={queryParams.sort_field}
                 sort_direction={queryParams.sort_direction}
@@ -89,6 +115,7 @@ export default function ExercisesTable({ exercises, queryParams, users }) {
           </thead>
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
             <tr className="text-nowrap">
+              <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3">
@@ -130,23 +157,29 @@ export default function ExercisesTable({ exercises, queryParams, users }) {
                 <td className="px-3 py-2">
                   <img src={exercise.image_path} alt={exercise.name} />
                 </td>
-                <td className="px-3 py2 text-nowrap">{exercise.name}</td>
+                <th className="px-3 py2 text-gray-100 text-nowrap hover:underline">
+                  <Link href={route("exercises.show", exercise.id)}>
+                    {exercise.name}
+                  </Link>
+                </th>
                 <td className="px-3 py2">{exercise.description}</td>
+                <td className="px-3 py2">{exercise.workout.name}</td>
                 <td className="px-3 py2">{exercise.createdBy.name}</td>
                 <td className="px-3 py2 text-nowrap">{exercise.created_at}</td>
-                <td className="px-3 py-2">
+                <td className="px-3 py-2 text-nowrap">
                   <Link
                     href={route("exercises.edit", exercise.id)}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                   >
                     Edit
                   </Link>
-                  <Link
+                  <button
+                    onClick={(e) => deleteExercise(exercise)}
                     href={route("exercises.destroy", exercise.id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                   >
                     Delete
-                  </Link>
+                  </button>
                 </td>
               </tr>
             ))}

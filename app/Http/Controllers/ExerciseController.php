@@ -7,7 +7,12 @@ use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\WorkoutResource;
 use App\Models\User;
+use App\Models\Workout;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ExerciseController extends Controller
 {
@@ -34,6 +39,7 @@ class ExerciseController extends Controller
             'exercises' => ExerciseResource::collection($exercises),
             'users' => UserResource::collection(User::all()),
             'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
         ]);
     }
 
@@ -42,7 +48,11 @@ class ExerciseController extends Controller
      */
     public function create()
     {
-        //
+        $workouts = Workout::query()->orderBy('name', 'asc')->get();
+
+        return inertia('Exercises/Create', [
+            'workouts' => WorkoutResource::collection($workouts),
+        ]);
     }
 
     /**
@@ -50,7 +60,19 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        //
+        $data = $request->validated();
+        /** @var $image \Illuminate\Http\UploadedFile */
+        $image = $data['image'] ?? null;
+        $data['created_by'] = Auth::id();
+        $data['updated_by'] = Auth::id();
+
+        if ($image) {
+            $data['image_path'] = $image->store('exercise/' . Str::random(), 'public');
+        }
+
+        Exercise::create($data);
+
+        return to_route('exercises.index')->with('success', 'Exercise created successfully.');
     }
 
     /**
@@ -58,7 +80,10 @@ class ExerciseController extends Controller
      */
     public function show(Exercise $exercise)
     {
-        //
+        return inertia('Exercises/Details', [
+            'exercise' => new ExerciseResource($exercise),
+            'users' => UserResource::collection(User::all()),
+        ]);
     }
 
     /**
@@ -66,7 +91,12 @@ class ExerciseController extends Controller
      */
     public function edit(Exercise $exercise)
     {
-        //
+        $workouts = Workout::query()->orderBy('name', 'asc')->get();
+
+        return inertia('Exercises/Edit', [
+            'exercise' => new ExerciseResource($exercise),
+            'workouts' => WorkoutResource::collection($workouts),
+        ]);
     }
 
     /**
@@ -74,7 +104,22 @@ class ExerciseController extends Controller
      */
     public function update(UpdateExerciseRequest $request, Exercise $exercise)
     {
-        //
+        $data = $request->validated();
+
+        $image = $data['image'] ?? null;
+        $data['updated_by'] = Auth::id();
+
+        if ($image) {
+            if ($exercise->image_path) {
+                Storage::disk('public')->deleteDirectory(dirname($exercise->image_path));
+            }
+            $data['image_path'] = $image->store('exercise/' . Str::random(), 'public');
+        }
+
+        $exercise->update($data);
+
+        return to_route('exercises.index')
+            ->with('success', "\"$exercise->name\" updated successfully.");
     }
 
     /**
@@ -82,6 +127,13 @@ class ExerciseController extends Controller
      */
     public function destroy(Exercise $exercise)
     {
-        //
+        $name = $exercise->name;
+        $exercise->delete();
+
+        if ($exercise->image_path) {
+            Storage::disk('public')->deleteDirectory(dirname($exercise->image_path));
+        }
+
+        return to_route('exercises.index')->with('success', " \"$name\" deleted successfully.");
     }
 }

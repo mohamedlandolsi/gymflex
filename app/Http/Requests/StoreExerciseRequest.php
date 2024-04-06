@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreExerciseRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreExerciseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,16 @@ class StoreExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image'],
+            'video' => ['nullable', 'file'],
+            'description' => ['nullable', 'string'],
+            'sets' => ['required', 'integer', 'min:1'],
+            'rep_range' => ['required', 'string'],
+            'rest_period' => ['nullable', 'integer', 'min:0'],
+            'muscle_group' => ['required', Rule::in(['chest', 'back', 'shoulders', 'legs', 'arms', 'core'])],
+            'equipment' => ['required', Rule::in(['barbell', 'dumbbell', 'kettlebell', 'cable', 'machine', 'bodyweight'])],
+            'workout_id' => ['nullable', 'integer', 'exists:workouts,id'],
         ];
     }
 }

@@ -5,9 +5,12 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ExerciseResource extends JsonResource
 {
+    public static $wrap = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -19,7 +22,7 @@ class ExerciseResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'image_path' => $this->image_path,
+            'image_path' => $this->image_path ? Storage::url($this->image_path) : '',
             'video_path' => $this->video_path,
             'sets' => $this->sets,
             'rep_range' => $this->rep_range,
@@ -27,6 +30,7 @@ class ExerciseResource extends JsonResource
             'muscle_group' => $this->muscle_group,
             'equipment' => $this->equipment,
             'workout' => new WorkoutResource($this->workout),
+            'workout_id' => $this->workout_id,
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),

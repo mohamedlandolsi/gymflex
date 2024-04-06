@@ -26,12 +26,12 @@ export default function Create({ auth }) {
       header={
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Create new workout
+            Create new workouts
           </h2>
         </div>
       }
     >
-      <Head title="Create new workout" />
+      <Head title="Create new workouts" />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -44,7 +44,7 @@ export default function Create({ auth }) {
                 <div>
                   <InputLabel
                     htmlFor="workout_image_path"
-                    value="Workout Image"
+                    value="Worktou Image"
                   />
                   <TextInput
                     id="workout_image_path"
@@ -56,7 +56,7 @@ export default function Create({ auth }) {
                   <InputError message={errors.image} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                  <InputLabel htmlFor="workout_name" value="Workout Name" />
+                  <InputLabel htmlFor="workout_name" value="Exercise Name" />
                   <TextInput
                     id="workout_name"
                     type="text"

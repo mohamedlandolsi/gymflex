@@ -1,18 +1,12 @@
-import GymflexLogo from "@/Components/UI/GymFlexLogo";
-import { Link } from "@inertiajs/react";
+import Navbar from "@/Components/Home/Navbar";
+import Footer from "@/Components/Home/Footer";
 
-export default function Guest({ children }) {
+export default function GuestLayout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-      <div>
-        <Link href="/">
-          <GymflexLogo className="w-30 h-30 fill-current" />
-        </Link>
-      </div>
-
-      <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-        {children}
-      </div>
-    </div>
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
   );
 }

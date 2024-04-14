@@ -21,7 +21,7 @@ export default function Index({
       delete queryParams[name];
     }
 
-    router.get(route("workouts.index"), queryParams);
+    router.get(route("workouts-admin.index"), queryParams);
   };
 
   const onKeyPress = (name, e) => {
@@ -41,7 +41,7 @@ export default function Index({
       queryParams.sort_direction = "asc";
     }
 
-    router.get(route("workouts.index"), queryParams);
+    router.get(route("workouts-admin.index"), queryParams);
   };
 
   const deleteProject = (workout) => {
@@ -49,7 +49,7 @@ export default function Index({
       return;
     }
 
-    router.delete(route("workouts.destroy", workout.id));
+    router.delete(route("workouts-admin.destroy", workout.id));
   };
 
   return (
@@ -61,7 +61,7 @@ export default function Index({
             Workouts
           </h2>
           <Link
-            href={route("workouts.create")}
+            href={route("workouts-admin.create")}
             className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
           >
             Add new
@@ -180,7 +180,7 @@ export default function Index({
                           )}
                         </td>
                         <th className="px-3 py2 text-gray-100 text-nowrap hover:underline">
-                          <Link href={route("workouts.show", workout.id)}>
+                          <Link href={route("workouts-admin.show", workout.id)}>
                             {workout.name}
                           </Link>
                         </th>
@@ -191,14 +191,14 @@ export default function Index({
                         </td>
                         <td className="px-3 py-2 text-nowrap">
                           <Link
-                            href={route("workouts.edit", workout.id)}
+                            href={route("workouts-admin.edit", workout.id)}
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                           >
                             Edit
                           </Link>
                           <button
                             onClick={(e) => deleteProject(workout)}
-                            href={route("workouts.destroy", workout.id)}
+                            href={route("workouts-admin.destroy", workout.id)}
                             className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                           >
                             Delete

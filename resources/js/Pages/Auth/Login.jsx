@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Checkbox from "@/Components/Checkbox";
-import GuestLayout from "@/Layouts/GuestLayout";
+import AuthenticationLayout from "@/Layouts/AuthenticationLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -27,7 +27,7 @@ export default function Login({ status, canResetPassword }) {
   };
 
   return (
-    <GuestLayout>
+    <AuthenticationLayout>
       <Head title="Log in" />
 
       {status && (
@@ -106,6 +106,6 @@ export default function Login({ status, canResetPassword }) {
           )}
         </div>
       </form>
-    </GuestLayout>
+    </AuthenticationLayout>
   );
 }

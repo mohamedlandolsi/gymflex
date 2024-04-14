@@ -32,7 +32,6 @@ class StoreExerciseRequest extends FormRequest
             'rest_period' => ['nullable', 'integer', 'min:0'],
             'muscle_group' => ['required', Rule::in(['chest', 'back', 'shoulders', 'legs', 'arms', 'core'])],
             'equipment' => ['required', Rule::in(['barbell', 'dumbbell', 'kettlebell', 'cable', 'machine', 'bodyweight'])],
-            'workout_id' => ['nullable', 'integer', 'exists:workouts,id'],
         ];
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\Models\Exercise;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ExerciseController extends Controller
+class GuestExerciseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,7 +34,7 @@ class ExerciseController extends Controller
 
         $exercises = $query->orderBy($sortField, $sortDirection)->paginate(10)->onEachSide(1);
 
-        return inertia('Admin/Exercises/Index', [
+        return inertia('Guest/Exercises/Index', [
             'exercises' => ExerciseResource::collection($exercises),
             'users' => UserResource::collection(User::all()),
             'queryParams' => request()->query() ?: null,
@@ -46,7 +47,7 @@ class ExerciseController extends Controller
      */
     public function create()
     {
-        return inertia('Admin/Exercises/Create');
+        return inertia('Guest/Exercises/Create');
     }
 
     /**
@@ -66,7 +67,7 @@ class ExerciseController extends Controller
 
         Exercise::create($data);
 
-        return to_route('exercises-admin.index')->with('success', 'Exercise created successfully.');
+        return to_route('exercises.index')->with('success', 'Exercise created successfully.');
     }
 
     /**
@@ -74,7 +75,7 @@ class ExerciseController extends Controller
      */
     public function show(Exercise $exercise)
     {
-        return inertia('Admin/Exercises/Details', [
+        return inertia('Guest/Exercises/Details', [
             'exercise' => new ExerciseResource($exercise),
             'users' => UserResource::collection(User::all()),
         ]);
@@ -85,7 +86,7 @@ class ExerciseController extends Controller
      */
     public function edit(Exercise $exercise)
     {
-        return inertia('Admin/Exercises/Edit', [
+        return inertia('Guest/Exercises/Edit', [
             'exercise' => new ExerciseResource($exercise),
         ]);
     }
@@ -109,7 +110,7 @@ class ExerciseController extends Controller
 
         $exercise->update($data);
 
-        return to_route('exercises-admin.index')
+        return to_route('exercises.index')
             ->with('success', "\"$exercise->name\" updated successfully.");
     }
 
@@ -125,6 +126,6 @@ class ExerciseController extends Controller
             Storage::disk('public')->deleteDirectory(dirname($exercise->image_path));
         }
 
-        return to_route('exercises-admin.index')->with('success', " \"$name\" deleted successfully.");
+        return to_route('exercises.index')->with('success', " \"$name\" deleted successfully.");
     }
 }

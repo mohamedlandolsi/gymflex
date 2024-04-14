@@ -18,7 +18,7 @@ export default function Edit({ auth, workout }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("workouts.update", workout.id));
+    post(route("workouts-admin.update", workout.id));
   };
 
   return (

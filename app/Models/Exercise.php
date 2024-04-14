@@ -21,12 +21,11 @@ class Exercise extends Model
         'equipment',
         'created_by',
         'updated_by',
-        'workout_id',
     ];
 
     public function workout()
     {
-        return $this->belongsTo(Workout::class);
+        return $this->belongsToMany(Workout::class);
     }
 
     public function createdBy()

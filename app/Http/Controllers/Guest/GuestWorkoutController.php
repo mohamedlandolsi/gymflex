@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\Models\Workout;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Http\Requests\UpdateWorkoutRequest;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class WorkoutController extends Controller
+class GuestWorkoutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,9 +36,8 @@ class WorkoutController extends Controller
 
         $workouts = $query->with('exercises')->orderBy($sortField, $sortDirection)->paginate(10)->onEachSide(1);
 
-        return inertia('Admin/Workouts/Index', [
+        return inertia('Guest/Workouts/Index', [
             'workouts' => WorkoutResource::collection($workouts),
-            'users' => UserResource::collection(User::all()),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
@@ -48,7 +48,7 @@ class WorkoutController extends Controller
      */
     public function create()
     {
-        return inertia('Admin/Workouts/Create', [
+        return inertia('Guest/Workouts/Create', [
             'exercises' => ExerciseResource::collection(Exercise::all()),
         ]);
     }
@@ -70,7 +70,7 @@ class WorkoutController extends Controller
 
         Workout::create($data);
 
-        return to_route('workouts-admin.index')->with('success', 'Workout created successfully.');
+        return to_route('workouts.index')->with('success', 'Workout created successfully.');
     }
 
     /**
@@ -92,13 +92,14 @@ class WorkoutController extends Controller
 
         $exercises = $query->orderBy($sortField, $sortDirection)->paginate(10)->onEachSide(1);
 
-        return inertia('Admin/Workouts/Details', [
+        return inertia('Guest/Workouts/Details', [
             'workout' => new WorkoutResource($workout),
             'exercises' => ExerciseResource::collection($exercises),
             'users' => UserResource::collection(User::all()),
             'queryParams' => request()->query() ?: null,
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -129,7 +130,7 @@ class WorkoutController extends Controller
 
         $workout->update($data);
 
-        return to_route('workouts-admin.index')
+        return to_route('workouts.index')
             ->with('success', "\"$workout->name\" updated successfully.");
     }
 
@@ -145,6 +146,6 @@ class WorkoutController extends Controller
             Storage::disk('public')->deleteDirectory(dirname($workout->image_path));
         }
 
-        return to_route('workouts-admin.index')->with('success', " \"$name\" deleted successfully.");
+        return to_route('workouts.index')->with('success', " \"$name\" deleted successfully.");
     }
 }

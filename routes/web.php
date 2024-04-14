@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\Guest\GuestExerciseController;
+use App\Http\Controllers\Guest\GuestWorkoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutController;
@@ -10,19 +12,21 @@ use Inertia\Inertia;
 
 // Route::redirect('/', '/dashboard');
 Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('welcome');
+    return Inertia::render('Home');
+})->name('home');
+Route::resource('workouts', GuestWorkoutController::class);
+Route::resource('exercises', GuestExerciseController::class);
 
-Route::get('/dashboard', function () {
+Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::resource('workouts', WorkoutController::class);
-    Route::resource('exercises', ExerciseController::class);
+    Route::resource('workouts-admin', WorkoutController::class);
+    Route::resource('exercises-admin', ExerciseController::class);
     Route::resource('users', UserController::class);
 });
 

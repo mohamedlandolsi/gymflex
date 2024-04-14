@@ -1,15 +1,17 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
+import SelectInput from "@/Components/SelectInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ auth }) {
+export default function Create({ auth, exercises }) {
   const { data, setData, post, errors, reset, processing } = useForm({
     image: "",
     name: "",
     description: "",
+    exercise: {},
   });
 
   // processing will be used to make the submit button loads when the form is being submitted
@@ -17,7 +19,7 @@ export default function Create({ auth }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("workouts.store"));
+    post(route("workouts-admin.store"));
   };
 
   return (
@@ -56,7 +58,7 @@ export default function Create({ auth }) {
                   <InputError message={errors.image} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                  <InputLabel htmlFor="workout_name" value="Exercise Name" />
+                  <InputLabel htmlFor="workout_name" value="Workout Name" />
                   <TextInput
                     id="workout_name"
                     type="text"
@@ -82,9 +84,27 @@ export default function Create({ auth }) {
                   />
                   <InputError message={errors.description} className="mt-2" />
                 </div>
+                <div className="mt-4">
+                  <InputLabel htmlFor="exercise" value="Exercise" />
+                  <SelectInput
+                    id="exercise"
+                    name="exercise"
+                    // value={data.exercise_id}
+                    className="mt-1 block w-full"
+                    onChange={(e) => setData("exercise", e.target.value)}
+                  >
+                    <option value="">Select an exercise</option>
+                    {exercises.data.map((exercise) => (
+                      <option key={exercise.id} value={exercise.id}>
+                        {exercise.name}
+                      </option>
+                    ))}
+                  </SelectInput>
+                  <InputError message={errors.description} className="mt-2" />
+                </div>
                 <div className="mt-4 text-right">
                   <button className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">
-                    <Link href={route("workouts.index")}>Cancel</Link>
+                    <Link href={route("workouts-admin.index")}>Cancel</Link>
                   </button>
                   <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
                     Submit

@@ -6,7 +6,7 @@ import SelectInput from "@/Components/SelectInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ auth, workouts }) {
+export default function Create({ auth }) {
   const { data, setData, post, errors, reset, processing } = useForm({
     image: "",
     name: "",
@@ -15,7 +15,6 @@ export default function Create({ auth, workouts }) {
     rep_range: "",
     muscle_group: "",
     equipment: "",
-    workout_id: "",
   });
 
   // processing will be used to make the submit button loads when the form is being submitted
@@ -23,7 +22,7 @@ export default function Create({ auth, workouts }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("exercises.store"));
+    post(route("exercises-admin.store"));
   };
 
   return (
@@ -156,27 +155,9 @@ export default function Create({ auth, workouts }) {
                   </SelectInput>
                   <InputError message={errors.equipment} className="mt-2" />
                 </div>
-                <div className="mt-4">
-                  <InputLabel htmlFor="workout_id" value="Workout" />
-                  <SelectInput
-                    id="workout_id"
-                    name="workout_id"
-                    value={data.workout_id}
-                    className="mt-1 block w-full"
-                    onChange={(e) => setData("workout_id", e.target.value)}
-                  >
-                    <option value="">Select a workout</option>
-                    {workouts.data.map((workout) => (
-                      <option key={workout.id} value={workout.id}>
-                        {workout.name}
-                      </option>
-                    ))}
-                  </SelectInput>
-                  <InputError message={errors.equipment} className="mt-2" />
-                </div>
                 <div className="mt-4 text-right">
                   <button className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">
-                    <Link href={route("exercises.index")}>Cancel</Link>
+                    <Link href={route("exercises-admin.index")}>Cancel</Link>
                   </button>
                   <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
                     Submit

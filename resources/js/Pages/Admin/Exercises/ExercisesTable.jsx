@@ -19,7 +19,7 @@ export default function ExercisesTable({
       delete queryParams[name];
     }
 
-    router.get(route("exercises.index"), queryParams);
+    router.get(route("exercises-admin.index"), queryParams);
   };
 
   const onKeyPress = (name, e) => {
@@ -39,7 +39,7 @@ export default function ExercisesTable({
       queryParams.sort_direction = "asc";
     }
 
-    router.get(route("exercises.index"), queryParams);
+    router.get(route("exercises-admin.index"), queryParams);
   };
 
   const deleteExercise = (exercise) => {
@@ -47,7 +47,7 @@ export default function ExercisesTable({
       return;
     }
 
-    router.delete(route("exercises.destroy", exercise.id));
+    router.delete(route("exercises-admin.destroy", exercise.id));
   };
 
   return (
@@ -85,14 +85,6 @@ export default function ExercisesTable({
                 sortChanged={sortChanged}
               >
                 Description
-              </TableHeading>
-              <TableHeading
-                name="workout"
-                sort_field={queryParams.sort_field}
-                sort_direction={queryParams.sort_direction}
-                sortChanged={sortChanged}
-              >
-                Workout
               </TableHeading>
               <TableHeading
                 name="created_by"
@@ -144,7 +136,6 @@ export default function ExercisesTable({
                 </SelectInput>
               </th>
               <th className="px-3 py-3"></th>
-              <th className="px-3 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -158,24 +149,23 @@ export default function ExercisesTable({
                   <img src={exercise.image_path} alt={exercise.name} />
                 </td>
                 <th className="px-3 py2 text-gray-100 text-nowrap hover:underline">
-                  <Link href={route("exercises.show", exercise.id)}>
+                  <Link href={route("exercises-admin.show", exercise.id)}>
                     {exercise.name}
                   </Link>
                 </th>
                 <td className="px-3 py2">{exercise.description}</td>
-                <td className="px-3 py2">{exercise.workout.name}</td>
                 <td className="px-3 py2">{exercise.createdBy.name}</td>
                 <td className="px-3 py2 text-nowrap">{exercise.created_at}</td>
                 <td className="px-3 py-2 text-nowrap">
                   <Link
-                    href={route("exercises.edit", exercise.id)}
+                    href={route("exercises-admin.edit", exercise.id)}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                   >
                     Edit
                   </Link>
                   <button
                     onClick={(e) => deleteExercise(exercise)}
-                    href={route("exercises.destroy", exercise.id)}
+                    href={route("exercises-admin.destroy", exercise.id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                   >
                     Delete

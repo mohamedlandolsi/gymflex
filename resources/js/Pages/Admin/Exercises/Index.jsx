@@ -12,7 +12,7 @@ export default function Index({ auth, exercises, users, queryParams = null, succ
             Exercises
           </h2>
           <Link
-            href={route("exercises.create")}
+            href={route("exercises-admin.create")}
             className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
           >
             Add new

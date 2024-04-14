@@ -29,8 +29,6 @@ class ExerciseResource extends JsonResource
             'rest_period' => $this->rest_period,
             'muscle_group' => $this->muscle_group,
             'equipment' => $this->equipment,
-            'workout' => new WorkoutResource($this->workout),
-            'workout_id' => $this->workout_id,
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),

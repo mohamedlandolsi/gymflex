@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import ExercisesTable from "../Exercises/ExercisesTable";
+import ExercisesTable from "./ExercisesTable";
 
 export default function Details({
   auth,

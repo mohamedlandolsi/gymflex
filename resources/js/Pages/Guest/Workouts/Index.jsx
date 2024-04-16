@@ -84,6 +84,7 @@ export default function Index({ workouts, queryParams = null }) {
               description={workout.description}
               image={workout.image_path}
               buttonText={"More details"}
+              routeName="workouts.show"
             />
           ))}
         </div>

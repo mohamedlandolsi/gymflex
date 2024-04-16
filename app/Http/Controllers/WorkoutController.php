@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class WorkoutController extends Controller
 {
@@ -56,10 +57,26 @@ class WorkoutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(StoreWorkoutRequest $request)
+    // {
+    //     $data = $request->validated();
+    //     /** @var $image \Illuminate\Http\UploadedFile */
+    //     $image = $data['image'] ?? null;
+    //     $data['created_by'] = Auth::id();
+    //     $data['updated_by'] = Auth::id();
+
+    //     if ($image) {
+    //         $data['image_path'] = $image->store('workout/' . Str::random(), 'public');
+    //     }
+
+    //     Workout::create($data);
+
+    //     return to_route('workouts-admin.index')->with('success', 'Workout created successfully.');
+    // }
+
     public function store(StoreWorkoutRequest $request)
     {
         $data = $request->validated();
-        /** @var $image \Illuminate\Http\UploadedFile */
         $image = $data['image'] ?? null;
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
@@ -68,9 +85,16 @@ class WorkoutController extends Controller
             $data['image_path'] = $image->store('workout/' . Str::random(), 'public');
         }
 
-        Workout::create($data);
+        // Create the workout and get its ID
+        $workout = Workout::create($data);
 
-        return to_route('workouts-admin.index')->with('success', 'Workout created successfully.');
+        // Check if exercises are provided in the request
+        if (isset($data['exercises']) && is_array($data['exercises'])) {
+            // Attach the exercises to the workout
+            $workout->exercises()->attach($data['exercises']);   
+        }
+
+        return redirect()->route('workouts-admin.index')->with('success', 'Workout created successfully.');
     }
 
     /**

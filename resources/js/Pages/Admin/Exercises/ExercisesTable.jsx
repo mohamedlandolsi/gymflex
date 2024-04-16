@@ -109,7 +109,6 @@ export default function ExercisesTable({
             <tr className="text-nowrap">
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
-              <th className="px-3 py-3"></th>
               <th className="px-3 py-3">
                 <TextInput
                   className="w-full"
@@ -136,6 +135,7 @@ export default function ExercisesTable({
                 </SelectInput>
               </th>
               <th className="px-3 py-3"></th>
+              <th className="px-3 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -146,7 +146,11 @@ export default function ExercisesTable({
               >
                 <td className="px-3 py-2">{exercise.id}</td>
                 <td className="px-3 py-2">
-                  <img src={exercise.image_path} alt={exercise.name} />
+                  <img
+                    src={exercise.image_path}
+                    alt={exercise.name}
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
                 </td>
                 <th className="px-3 py2 text-gray-100 text-nowrap hover:underline">
                   <Link href={route("exercises-admin.show", exercise.id)}>

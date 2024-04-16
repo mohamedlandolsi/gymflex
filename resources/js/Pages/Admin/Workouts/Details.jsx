@@ -9,6 +9,7 @@ export default function Details({
   queryParams = null,
   users,
 }) {
+  console.log(workout);
   return (
     <AuthenticatedLayout
       user={auth.user}

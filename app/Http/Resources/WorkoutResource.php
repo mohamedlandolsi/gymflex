@@ -26,6 +26,7 @@ class WorkoutResource extends JsonResource
             'updatedBy' => new UserResource($this->updatedBy),
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),
             'updated_at' => (new Carbon($this->updated_at))->format('Y-m-d'),
+            'exercises' => ExerciseResource::collection($this->whenLoaded('exercises')),
         ];
     }
 }

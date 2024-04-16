@@ -11,7 +11,7 @@ export default function Create({ auth, exercises }) {
     image: "",
     name: "",
     description: "",
-    exercise: {},
+    exercises: [],
   });
 
   // processing will be used to make the submit button loads when the form is being submitted
@@ -20,6 +20,7 @@ export default function Create({ auth, exercises }) {
     e.preventDefault();
 
     post(route("workouts-admin.store"));
+    console.log(data);
   };
 
   return (
@@ -85,13 +86,21 @@ export default function Create({ auth, exercises }) {
                   <InputError message={errors.description} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                  <InputLabel htmlFor="exercise" value="Exercise" />
+                  <InputLabel htmlFor="exercises" value="Exercises" />
                   <SelectInput
-                    id="exercise"
-                    name="exercise"
+                    id="exercises"
+                    name="exercises"
                     // value={data.exercise_id}
                     className="mt-1 block w-full"
-                    onChange={(e) => setData("exercise", e.target.value)}
+                    onChange={(e) =>
+                      setData(
+                        "exercises",
+                        Array.from(
+                          e.target.selectedOptions,
+                          (option) => option.value
+                        )
+                      )
+                    }
                   >
                     <option value="">Select an exercise</option>
                     {exercises.data.map((exercise) => (

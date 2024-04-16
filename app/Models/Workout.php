@@ -19,7 +19,8 @@ class Workout extends Model
 
     public function exercises()
     {
-        return $this->belongsToMany(Exercise::class)->withPivot('sets', 'rep_range', 'rest_period')->withTimestamps();
+        // return $this->belongsToMany(Exercise::class)->withPivot('sets', 'rep_range', 'rest_period')->withTimestamps();
+        return $this->belongsToMany(Exercise::class);
     }
 
     public function createdBy()
@@ -30,5 +31,5 @@ class Workout extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
-    }
+    } 
 }

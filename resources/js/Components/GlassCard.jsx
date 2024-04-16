@@ -6,6 +6,7 @@ export default function GlassCard({
   description,
   image,
   buttonText,
+  routeName,
 }) {
   return (
     <div className="card w-86 glass">
@@ -24,7 +25,7 @@ export default function GlassCard({
         <h2 className="card-title">{title}</h2>
         <p>{description}</p>
         <div className="card-actions justify-end">
-          <Link href={route("workouts.show", id)}>
+          <Link href={route(routeName, id)}>
             <button className="btn btn-accent">{buttonText}</button>
           </Link>
         </div>

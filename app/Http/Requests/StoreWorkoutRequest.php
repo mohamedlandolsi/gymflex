@@ -25,10 +25,10 @@ class StoreWorkoutRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'image' => ['nullable', 'image'],
             'description' => ['nullable', 'string'],
-            // 'exercises' => ['required', 'array'],
-            // 'exercises.*.id' => ['required', 'integer', 'exists:exercises,id'],
-            // 'exercises.*.sets' => ['required', 'integer', 'min:1'],
-            // 'exercises.*.rep_range' => ['required', 'string'],
+            'exercises' => ['required', 'array'],
+            'exercises.*.id' => ['required', 'integer', 'exists:exercises,id'],
+            // 'exercises.*.sets' => ['nullable', 'integer'],
+            // 'exercises.*.rep_range' => ['nullable', 'string'],
             // 'exercises.*.rest_period' => ['nullable', 'integer', 'min:0'],
         ];
     }

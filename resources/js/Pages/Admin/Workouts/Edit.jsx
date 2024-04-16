@@ -21,6 +21,8 @@ export default function Edit({ auth, workout }) {
     post(route("workouts-admin.update", workout.id));
   };
 
+  console.log(workout)
+
   return (
     <AuthenticatedLayout
       user={auth.user}

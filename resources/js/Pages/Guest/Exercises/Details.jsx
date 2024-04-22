@@ -1,9 +1,9 @@
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 
-export default function Details({ exercise }) {
+export default function Details({ exercise, auth }) {
   return (
-    <GuestLayout>
+    <GuestLayout user={auth.user}>
       <Head title={exercise.name} />
       <div className="container px-6 pt-12 mx-auto text-center">
         <div className="max-w-lg mx-auto">

@@ -3,7 +3,7 @@ import Pagination from "@/Components/Pagination";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 
-export default function Index({ workouts, queryParams = null }) {
+export default function Index({ workouts, queryParams = null, auth }) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -37,7 +37,7 @@ export default function Index({ workouts, queryParams = null }) {
   };
 
   return (
-    <GuestLayout>
+    <GuestLayout user={auth.user}>
       <Head title="Workouts" />
       <div className="mx-20 my-5">
         <div className="hero min-h-fit bg-base-200 mb-5">

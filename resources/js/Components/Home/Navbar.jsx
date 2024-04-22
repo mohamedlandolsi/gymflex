@@ -1,13 +1,11 @@
 import GymflexLogo from "@/Components/UI/GymFlexLogo";
 import { Link } from "@inertiajs/react";
 
-export default function Navbar() {
+export default function Navbar({ user, success }) {
   const changeTheme = (theme) => {
     localStorage.setItem("theme", theme);
     window.location.reload();
   };
-
-  console.log(localStorage.getItem("theme"));
 
   return (
     <div className="navbar bg-base-100">
@@ -85,7 +83,7 @@ export default function Navbar() {
           <input
             type="checkbox"
             className="theme-controller hidden"
-            value="synthwave"
+            value="dark"
             onClick={
               localStorage.getItem("theme") === "dark"
                 ? () => changeTheme("emerald")
@@ -95,7 +93,7 @@ export default function Navbar() {
 
           {localStorage.getItem("theme") === "dark" && (
             <svg
-              className="swap-off fill-current w-10 h-10"
+              className="swap-off fill-current w-8 h-8"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -104,7 +102,7 @@ export default function Navbar() {
           )}
           {localStorage.getItem("theme") === "emerald" && (
             <svg
-              className="swap-off fill-current w-10 h-10"
+              className="swap-off fill-current w-8 h-8"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -112,9 +110,52 @@ export default function Navbar() {
             </svg>
           )}
         </label>
-        <Link href={route("login")} className="btn btn-accent">
-          Login
-        </Link>
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              {user.profile_photo_path ? (
+                <div className="w-10 rounded-full">
+                  <img src={user.profile_photo_path} />
+                </div>
+              ) : (
+                <div className="avatar placeholder">
+                  <div className="bg-neutral text-neutral-content rounded-full w-8">
+                    <span className="text-3xl">{user.name.charAt(0)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            <ul
+              tabIndex={0}
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link href={route("profile.edit")}>Profile</Link>
+              </li>
+              {user.role === "admin" && (
+                <li>
+                  <Link className="justify-between" href={route("dashboard")}>
+                    Dashboard
+                    <span className="badge">Admin</span>
+                  </Link>
+                </li>
+              )}
+              <li>
+                <Link href={route("logout")} method="post" as="button">
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <Link href={route("login")} className="btn btn-accent">
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="shrink-0 flex items-center">
-                <Link href={route("dashboard")}>
+                <Link href={route("home")}>
                   <GymflexLogo className="block h-9 w-auto" />
                 </Link>
               </div>
@@ -144,14 +144,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
               Dashboard
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              href={route("workouts.index")}
-              active={route().current("workouts.index")}
+              href={route("workouts-admin.index")}
+              active={route().current("workouts-admin.index")}
             >
               Workouts
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              href={route("exercises.index")}
-              active={route().current("exercises.index")}
+              href={route("exercises-admin.index")}
+              active={route().current("exercises-admin.index")}
             >
               Exercises
             </ResponsiveNavLink>

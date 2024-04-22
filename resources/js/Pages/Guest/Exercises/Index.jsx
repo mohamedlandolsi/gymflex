@@ -1,9 +1,10 @@
+import ExerciseCard from "@/Components/ExerciseCard";
 import GlassCard from "@/Components/GlassCard";
 import Pagination from "@/Components/Pagination";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 
-export default function Index({ exercises, queryParams = null }) {
+export default function Index({ exercises, queryParams = null, auth }) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -36,8 +37,10 @@ export default function Index({ exercises, queryParams = null }) {
     router.get(route("exercises.index"), queryParams);
   };
 
+  console.log(exercises);
+
   return (
-    <GuestLayout>
+    <GuestLayout user={auth.user}>
       <Head title="Exercises" />
       <div className="mx-20 my-5">
         <div className="hero min-h-fit bg-base-200 mb-5">
@@ -77,11 +80,13 @@ export default function Index({ exercises, queryParams = null }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {exercises.data.map((exercise) => (
-            <GlassCard
+            <ExerciseCard
               key={exercise.id}
               id={exercise.id}
               title={exercise.name}
               description={exercise.description}
+              muscle_group={exercise.muscle_group}
+              equipment={exercise.equipment}
               image={exercise.image_path}
               buttonText={"More details"}
               routeName={"exercises.show"}

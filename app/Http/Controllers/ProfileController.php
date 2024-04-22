@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -39,6 +43,33 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit');
     }
+
+    // public function update(ProfileUpdateRequest $request, User $user)
+    // {
+    //     // Update user data
+    //     $user->fill($request->validated());
+
+    //     // Reset email verification if email is updated
+    //     if ($user->isDirty('email')) {
+    //         $user->email_verified_at = null;
+    //     }
+
+    //     // Handle profile photo upload
+    //     if ($request->hasFile('image')) {
+    //         $image = $request->file('image');
+    //         if ($user->profile_photo_path) {
+    //             Storage::disk('public')->delete($user->profile_photo_path);
+    //         }
+    //         $user->profile_photo_path = $image->store('user/' . Str::random(), 'public');
+    //     }
+
+    //     // Save user changes
+    //     $request->user()->save();
+
+    //     // Redirect to edit profile page
+    //     return redirect()->route('profile.edit');
+    // }
+
 
     /**
      * Delete the user's account.

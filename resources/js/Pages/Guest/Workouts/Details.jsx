@@ -6,10 +6,11 @@ export default function Details({
   exercises,
   queryParams = null,
   users,
+  auth,
 }) {
   console.log(workout);
   return (
-    <GuestLayout>
+    <GuestLayout user={auth.user}>
       <Head title={workout.name} />
       <div className="hero p-3">
         <div className="hero-content flex-col lg:flex-row-reverse">

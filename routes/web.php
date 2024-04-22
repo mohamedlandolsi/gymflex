@@ -4,8 +4,10 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\Guest\GuestExerciseController;
 use App\Http\Controllers\Guest\GuestWorkoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UnauthorizedController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,9 +22,9 @@ Route::resource('exercises', GuestExerciseController::class);
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', AdminMiddleware::class])->name('dashboard');
 
-Route::middleware('auth', 'verified')->group(function () {
+Route::middleware('auth', 'verified', AdminMiddleware::class)->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
@@ -51,5 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/unauthorized', [UnauthorizedController::class, 'show'])->name('unauthorized');
 
 require __DIR__ . '/auth.php';

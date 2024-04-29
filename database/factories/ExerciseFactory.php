@@ -28,7 +28,6 @@ class ExerciseFactory extends Factory
             'equipment' => fake()->randomElement(['Bodyweight', 'Dumbbells', 'Barbell', 'Resistance Bands', 'Kettlebells', 'Machine', 'Cable']),
             'created_by' => 1,
             'updated_by' => 1,
-            'workout_id' => 1,
         ];
     }
 }

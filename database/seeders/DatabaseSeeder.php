@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Exercise;
 use App\Models\User;
 use App\Models\Workout;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,16 +17,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Mohamed',
-            'email' => 'mohamed@example.com',
-            'password' => bcrypt('Azerty123*'),
-            'email_verified_at' => time(),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Mohamed',
+        //     'email' => 'mohamed@example.com',
+        //     'password' => bcrypt('Azerty123*'),
+        //     'email_verified_at' => time(),
+        // ]);
 
-        Workout::factory()
-            ->count(20)
-            ->hasExercises(7)
+        Exercise::factory()
+            ->count(10)
             ->create();
     }
 }

@@ -5,6 +5,7 @@ import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Create({ auth, exercises }) {
   const { data, setData, post, errors, reset, processing } = useForm({
@@ -16,8 +17,19 @@ export default function Create({ auth, exercises }) {
 
   // processing will be used to make the submit button loads when the form is being submitted
 
+  const [selectedExercises, setSelectedExercises] = useState([]);
+
   const onSubmit = (e) => {
     e.preventDefault();
+
+    // Combine workout data with selected exercises
+    const formData = new FormData();
+    formData.append("image", data.image);
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    selectedExercises.forEach((exercise) => {
+      formData.append("exercises[]", exercise);
+    });
 
     post(route("workouts-admin.store"));
     console.log(data);
@@ -87,7 +99,7 @@ export default function Create({ auth, exercises }) {
                 </div>
                 <div className="mt-4">
                   <InputLabel htmlFor="exercises" value="Exercises" />
-                  <SelectInput
+                  {/* <SelectInput
                     id="exercises"
                     name="exercises"
                     // value={data.exercise_id}
@@ -108,9 +120,32 @@ export default function Create({ auth, exercises }) {
                         {exercise.name}
                       </option>
                     ))}
+                  </SelectInput> */}
+
+                  <SelectInput
+                    id="exercises"
+                    name="exercises"
+                    className="mt-1 block w-full"
+                    onChange={(e) =>
+                      setSelectedExercises(
+                        Array.from(
+                          e.target.selectedOptions,
+                          (option) => option.value
+                        )
+                      )
+                    }
+                  >
+                    <option value="">Select exercises</option>
+                    {exercises.data.map((exercise) => (
+                      <option key={exercise.id} value={exercise.id}>
+                        {exercise.name}
+                      </option>
+                    ))}
                   </SelectInput>
+
                   <InputError message={errors.description} className="mt-2" />
                 </div>
+
                 <div className="mt-4 text-right">
                   <button className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">
                     <Link href={route("workouts-admin.index")}>Cancel</Link>

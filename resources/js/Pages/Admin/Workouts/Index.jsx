@@ -4,6 +4,7 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading";
+import { useState } from "react";
 
 export default function Index({
   auth,
@@ -209,6 +210,7 @@ export default function Index({
                   </tbody>
                 </table>
               </div>
+
               {/* Pagination */}
               <Pagination links={workouts.meta.links} />
             </div>

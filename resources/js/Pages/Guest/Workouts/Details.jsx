@@ -62,8 +62,8 @@ export default function Details({
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-              alt="Movie"
+              src="https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+              alt=""
             />
           </figure>
           <div className="card-body">
@@ -77,8 +77,8 @@ export default function Details({
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-              alt="Movie"
+              src="https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+              alt=""
             />
           </figure>
           <div className="card-body">
@@ -92,8 +92,8 @@ export default function Details({
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-              alt="Movie"
+              src="https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+              alt=""
             />
           </figure>
           <div className="card-body">
@@ -107,8 +107,8 @@ export default function Details({
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-              alt="Movie"
+              src="https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+              alt=""
             />
           </figure>
           <div className="card-body">

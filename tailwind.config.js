@@ -23,8 +23,58 @@ export default {
   plugins: [forms, require("daisyui")],
 
   daisyui: {
+    themes: [
+      {
+        dark: {
+          ...require("daisyui/src/theming/themes")["dark"],
+
+          primary: "#4ade80",
+
+          secondary: "#06b6d4",
+
+          accent: "#fb923c",
+
+          neutral: "#111827",
+
+          "base-100": "#1f2937",
+
+          info: "#76d3ff",
+
+          success: "#bef264",
+
+          warning: "#fbbf24",
+
+          error: "#ef4444",
+        },
+      },
+
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+
+          primary: "#a3e635",
+
+          secondary: "#06b6d4",
+
+          accent: "#fb923c",
+
+          neutral: "#93c5fd",
+
+          "base-100": "#f3f4f6",
+
+          info: "#76d3ff",
+
+          success: "#bef264",
+
+          warning: "#fbbf24",
+
+          error: "#ef4444",
+        },
+      },
+    ],
+
     styled: true,
-    themes: true,
+    // themes: true,
     base: true,
     utils: true,
     logs: true,

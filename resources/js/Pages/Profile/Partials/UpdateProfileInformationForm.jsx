@@ -4,6 +4,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
+import DaisyLabel from "@/Components/DaisyLabel";
 
 export default function UpdateProfileInformation({
   mustVerifyEmail,
@@ -37,49 +38,32 @@ export default function UpdateProfileInformation({
 
       <form onSubmit={submit} className="mt-6 space-y-6">
         <div>
-          <InputLabel htmlFor="name" value="Name" />
+          <DaisyLabel htmlFor="name" value="Name" />
           <input
             id="name"
             type="text"
             placeholder="Name"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-xs mt-1"
             value={data.name}
             onChange={(e) => setData("name", e.target.value)}
             required
             isFocused
             autoComplete="name"
           />
-          {errors.name && (
-            <div role="alert" className="alert alert-error mt-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="stroke-current shrink-0 h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>{errors.name}</span>
-            </div>
-          )}
+          <InputError className="mt-2" message={errors.name} />
         </div>
 
         <div>
-          <InputLabel htmlFor="email" value="Email" />
-
-          <TextInput
+          <DaisyLabel htmlFor="email" value="Email" />
+          <input
             id="email"
-            type="email"
-            className="mt-1 block w-full"
+            type="text"
+            className="input input-bordered w-full max-w-xs mt-1"
+            placeholder="Email"
             value={data.email}
             onChange={(e) => setData("email", e.target.value)}
             required
-            autoComplete="username"
+            autoComplete="email"
           />
 
           <InputError className="mt-2" message={errors.email} />

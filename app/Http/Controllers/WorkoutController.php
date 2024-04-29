@@ -11,9 +11,9 @@ use App\Http\Resources\WorkoutResource;
 use App\Models\Exercise;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Inertia\Inertia;
 
 class WorkoutController extends Controller
 {
@@ -91,7 +91,7 @@ class WorkoutController extends Controller
         // Check if exercises are provided in the request
         if (isset($data['exercises']) && is_array($data['exercises'])) {
             // Attach the exercises to the workout
-            $workout->exercises()->attach($data['exercises']);   
+            $workout->exercises()->attach($data['exercises']);
         }
 
         return redirect()->route('workouts-admin.index')->with('success', 'Workout created successfully.');
